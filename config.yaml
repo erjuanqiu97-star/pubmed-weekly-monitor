@@ -1,0 +1,90 @@
+ncbi:
+  email_env: NCBI_EMAIL
+  email: your.email@example.com
+  tool: weekly-pubmed-monitor
+
+search:
+  days: 7
+  retmax_per_group: 200
+  date_type: pdat
+  fields:
+    - Title/Abstract
+    - MeSH Terms
+  keyword_groups:
+    pulmonary_fibrosis:
+      - pulmonary fibrosis
+      - idiopathic pulmonary fibrosis
+      - lung fibrosis
+      - fibrotic lung disease
+    inhalation_delivery:
+      - inhalation delivery
+      - inhaled delivery
+      - pulmonary delivery
+      - respiratory delivery
+      - aerosol delivery
+    inhalation_formulation:
+      - inhalation formulation
+      - inhalable formulation
+      - dry powder inhaler
+      - nebulized formulation
+      - aerosol formulation
+    inhalable_microspheres:
+      - inhalable microsphere
+      - inhalable microspheres
+      - pulmonary microsphere
+      - pulmonary microspheres
+      - spray dried microsphere
+    inhalable_nanoparticles:
+      - inhalable nanoparticle
+      - inhalable nanoparticles
+      - pulmonary nanoparticle
+      - pulmonary nanoparticles
+      - nanomedicine pulmonary
+    liposome:
+      - liposome
+      - liposomal
+      - lipid vesicle
+    lnp:
+      - lipid nanoparticle
+      - lipid nanoparticles
+      - LNP
+      - LNPs
+    mrna_delivery:
+      - mRNA delivery
+      - messenger RNA delivery
+      - mRNA therapeutics
+      - mRNA vaccine delivery
+    pulmonary_delivery:
+      - pulmonary delivery
+      - lung delivery
+      - intratracheal delivery
+      - airway delivery
+
+outputs:
+  report_md: outputs/weekly_pubmed_report.md
+  results_xlsx: outputs/weekly_pubmed_results.xlsx
+
+journals:
+  whitelist_file: journal_whitelist.yaml
+
+translation:
+  enabled: true
+  provider: mymemory
+  endpoint: https://api.mymemory.translated.net/get
+  langpair: en|zh-CN
+  contact_email_env: NCBI_EMAIL
+  source_lang: EN
+  target_lang: ZH
+  summary_sentences: 3
+  max_summary_chars: 1200
+  timeout_seconds: 30
+
+email:
+  enabled: true
+  subject: Weekly PubMed Report
+  smtp_host: smtp.gmail.com
+  smtp_port: 587
+  smtp_user_env: SMTP_USER
+  smtp_password_env: SMTP_PASSWORD
+  report_to_env: REPORT_TO
+  report_from_env: SMTP_USER
