@@ -1,0 +1,42 @@
+name: Weekly PubMed Monitor
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  run-pubmed-monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate weekly report
+        env:
+          NCBI_EMAIL: ${{ secrets.NCBI_EMAIL }}
+        run: python -m pubmed_monitor --config config.yaml
+
+      - name: Email report
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          REPORT_TO: ${{ secrets.REPORT_TO }}
+        run: python -m pubmed_monitor.email_report --config config.yaml
+
+      - name: Upload report artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-pubmed-report
+          path: |
+            outputs/weekly_pubmed_report.md
+            outputs/weekly_pubmed_results.xlsx
