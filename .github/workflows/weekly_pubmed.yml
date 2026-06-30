@@ -1,10 +1,7 @@
 name: Weekly PubMed Monitor
 
 on:
-  schedule:
-    - cron: "0 6 * * 1"
   workflow_dispatch:
-
 jobs:
   run-pubmed-monitor:
     runs-on: ubuntu-latest
